@@ -1,7 +1,5 @@
 package ch.heigvd.res.labio.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
