@@ -23,19 +23,19 @@ public class Utils {
    */
   public static String[] getNextLine(String lines) {
     String[]result = new String[2];
-    char delimiter;
+    int i;
 
     if (lines.contains("\n")) {
-      delimiter = '\n';
+      i = lines.indexOf('\n');
     } else if (lines.contains("\r")) {
-      delimiter = '\r';
+      i = lines.indexOf('\r');
     } else {
       result[0] = "";
       result[1] = lines;
       return result;
     }
 
-    int i = lines.indexOf(delimiter);
+
     result[0] = lines.substring(0, i + 1);
     result[1] = lines.substring(i + 1);
 
