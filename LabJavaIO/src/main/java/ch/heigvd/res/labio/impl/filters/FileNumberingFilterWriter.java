@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 public class FileNumberingFilterWriter extends FilterWriter {
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
+  private int numberLine = 1;
+  private static boolean lineReturn = false;
 
   public FileNumberingFilterWriter(Writer out) {
     super(out);
@@ -25,17 +27,39 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   @Override
   public void write(String str, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    char[] cbuf = str.toCharArray();
+    write(cbuf, off, off + len);
   }
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    for(int i = off; i < len; ++i){
+      write(cbuf[i]);
+    }
   }
 
   @Override
   public void write(int c) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if(numberLine == 1 || (lineReturn && c != '\n')){
+      writing();
+      super.write(c);
+      lineReturn = false;
+      ++numberLine;
+    } else if(c == '\n'){
+      super.write(c);
+      writing();
+      lineReturn = false;
+      ++numberLine;
+    } else {
+      super.write(c);
+    }
+
+    if(c == '\r'){
+      lineReturn = true;
+    }
   }
 
+  public void writing() throws IOException{
+    super.write(numberLine + "\t", 0, String.valueOf(numberLine).length() + 1);
+  }
 }
