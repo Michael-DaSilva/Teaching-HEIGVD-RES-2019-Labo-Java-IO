@@ -140,7 +140,10 @@ public class Application implements IApplication {
       public void visit(File file) {
         try{
           writer.write(file.getPath() + '\n', 0, file.getPath().length() + 1);
-        }catch(Exception e){}
+        }catch(Exception e){
+          LOG.log(Level.SEVERE, "Error with the file/directory", e.getMessage());
+          e.printStackTrace();
+        }
       }
     });
   }
